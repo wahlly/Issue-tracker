@@ -65,6 +65,9 @@ module.exports = class IssueController{
             const existingProject = await Project.findOne({projectName: project})
             if(existingProject){
                 const selectIssue = existingProject.issues.id(issue._id)
+                if(!selectIssue){
+                    return res.status(400).json({ error: 'could not update', _id: issue._id })
+                }
                 const {issue_title,
                     issue_text,
                     created_by,
@@ -83,6 +86,32 @@ module.exports = class IssueController{
                     return res.status(200).json({result: 'successfully updated', _id: selectIssue._id})
             }
             return res.status(400).json({ error: 'could not update', _id: issue._id })
+        }
+        catch(err){
+            console.error(err)
+            return res.status(500).json({ error: err.message })
+        }
+    }
+
+    static async deleteIssue(req, res) {
+        try{
+            const project = req.params.project
+            const issue = req.body
+            if(!issue._id){
+                return res.status(400).json({ error: 'missing _id' })
+            }
+            //check if project exists
+            const existingProject = await Project.findOne({projectName: project})
+            if(existingProject){
+                const selectIssue = existingProject.issues.id(issue._id)
+                if(!selectIssue){
+                    return res.status(400).json({ error: 'could not delete' })
+                }
+                await selectIssue.remove()
+                await existingProject.save()
+                return res.status(200).json({result: 'successfully deleted', _id: selectIssue._id })
+            }
+            return res.status(400).json({ error: 'could not delete', _id: issue._id })
         }
         catch(err){
             console.error(err)
