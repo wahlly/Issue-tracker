@@ -5,10 +5,7 @@ module.exports = function (app) {
 
   app.route('/api/issues/:project')
   
-    .get(function (req, res){
-      let project = req.params.project;
-      
-    })
+    .get(IssueController.retrieveIssues)
     
     .post(IssueController.createIssue)
     

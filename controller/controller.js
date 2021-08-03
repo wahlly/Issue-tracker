@@ -25,7 +25,7 @@ module.exports = class IssueController{
         }
     }
 
-    static async retrieveIssue(req, res) {
+    static async retrieveIssues(req, res) {
         try{
             const project = req.params.project
             const existingProject = await Project.findOne({projectName: project})
