@@ -9,10 +9,7 @@ module.exports = function (app) {
     
     .post(IssueController.createIssue)
     
-    .put(function (req, res){
-      let project = req.params.project;
-      
-    })
+    .put(IssueController.updateIssue)
     
     .delete(function (req, res){
       let project = req.params.project;

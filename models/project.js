@@ -23,8 +23,16 @@ const issueSchema = new mongoose.Schema({
   open: {
     type: Boolean,
     default: true
+  },
+  created_on: {
+    type: Date,
+    default: Date.now
+  },
+  updated_on: {
+    type: Date,
+    default: Date.now
   }
-}, { timestamps: true })
+})
 
 const projectSchema = new mongoose.Schema({
   projectName: {
