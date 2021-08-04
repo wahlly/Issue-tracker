@@ -105,7 +105,7 @@ module.exports = class IssueController{
             if(existingProject){
                 const selectIssue = existingProject.issues.id(issue._id)
                 if(!selectIssue){
-                    return res.status(400).json({ error: 'could not delete' })
+                    return res.status(400).json({ error: 'could not delete', _id: issue._id })
                 }
                 await selectIssue.remove()
                 await existingProject.save()
